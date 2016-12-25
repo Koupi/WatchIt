@@ -74,7 +74,7 @@ public class MovieActivity extends AppCompatActivity {
             DatePickerDialog tpd = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    Toast.makeText(MovieActivity.this, String.format("Film planned for %02d.%02d.%d.", dayOfMonth, month, year), Toast.LENGTH_LONG).show();
+                    Toast.makeText(MovieActivity.this, String.format("Film planned for %02d.%02d.%d.", dayOfMonth, month + 1, year), Toast.LENGTH_LONG).show();
                     Calendar cal = Calendar.getInstance();
                     cal.set(Calendar.YEAR, year);
                     cal.set(Calendar.MONTH, month);
