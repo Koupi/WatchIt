@@ -5,20 +5,53 @@
     android:background="@color/windowBackground"
     tools:context="by.yawningturtles.watchit.fragments.SearchFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Search movies fragment" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="start movie activity"
-            android:id="@+id/show_movie"/>
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:layout_marginBottom="10dp">
+            <EditText
+                android:id="@+id/et_movie_title"
+                android:layout_width="0dp"
+                android:layout_weight="0.4"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorPrimary"
+                android:textColor="@color/textColorPrimary"
+                android:hint="Movie name"/>
+            <EditText
+                android:id="@+id/et_movie_year"
+                android:inputType="number"
+                android:layout_width="0dp"
+                android:layout_weight="0.2"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorPrimary"
+                android:textColor="@color/textColorPrimary"
+                android:hint="Year"/>
+            <Spinner
+                android:id="@+id/spinner_movie_type"
+                android:layout_width="0dp"
+                android:layout_weight="0.3"
+                android:layout_height="wrap_content"/>
+            <ImageButton
+                android:id="@+id/bt_search"
+                android:layout_width="0dp"
+                android:layout_weight="0.1"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_search_white"
+                android:background="@color/transparent"
+                android:padding="5dp"
+                android:clickable="true"/>
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/search_result"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </LinearLayout>
 
 
