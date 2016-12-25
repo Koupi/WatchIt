@@ -93,7 +93,7 @@ public class SavedMoviesFragment extends Fragment {
             holder.tvCountry.setText(f.getCountry());
             holder.tvDirector.setText(f.getDirector());
             holder.tvDate.setText(String.format("%02d.%02d.%d", f.getPlanningDate().get(Calendar.DAY_OF_MONTH),
-                    f.getPlanningDate().get(Calendar.MONTH), f.getPlanningDate().get(Calendar.YEAR)));
+                    f.getPlanningDate().get(Calendar.MONTH) + 1, f.getPlanningDate().get(Calendar.YEAR)));
             holder.tvActors.setText(f.getActors());
             final int pos = position;
             holder.btWatch.setOnClickListener(new View.OnClickListener() {

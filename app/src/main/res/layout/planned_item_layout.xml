@@ -67,7 +67,7 @@
                 android:layout_marginTop="5dp">
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="0.35"
+                    android:layout_weight="0.4"
                     android:layout_height="wrap_content"
                     android:text="Genre:"
                     android:textSize="18sp"
@@ -75,7 +75,7 @@
                 <TextView
                     android:id="@+id/tv_movie_genre_item"
                     android:layout_width="0dp"
-                    android:layout_weight="0.65"
+                    android:layout_weight="0.6"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:textColor="@color/textColorPrimary"/>
@@ -87,7 +87,7 @@
                 android:layout_marginTop="5dp">
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="0.35"
+                    android:layout_weight="0.4"
                     android:layout_height="wrap_content"
                     android:text="Year:"
                     android:textSize="18sp"
@@ -95,7 +95,7 @@
                 <TextView
                     android:id="@+id/tv_movie_year_item"
                     android:layout_width="0dp"
-                    android:layout_weight="0.65"
+                    android:layout_weight="0.6"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:textColor="@color/textColorPrimary"/>
@@ -107,7 +107,7 @@
                 android:layout_marginTop="5dp">
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="0.35"
+                    android:layout_weight="0.4"
                     android:layout_height="wrap_content"
                     android:text="Type:"
                     android:textSize="18sp"
@@ -115,7 +115,7 @@
                 <TextView
                     android:id="@+id/tv_movie_type_item"
                     android:layout_width="0dp"
-                    android:layout_weight="0.65"
+                    android:layout_weight="0.6"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:textColor="@color/textColorPrimary"/>
@@ -127,7 +127,7 @@
                 android:layout_marginTop="5dp">
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="0.35"
+                    android:layout_weight="0.4"
                     android:layout_height="wrap_content"
                     android:text="Runtime:"
                     android:textSize="18sp"
@@ -135,7 +135,7 @@
                 <TextView
                     android:id="@+id/tv_movie_runtime_item"
                     android:layout_width="0dp"
-                    android:layout_weight="0.65"
+                    android:layout_weight="0.6"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:textColor="@color/textColorPrimary"/>
@@ -147,7 +147,7 @@
                 android:layout_marginTop="5dp">
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="0.35"
+                    android:layout_weight="0.4"
                     android:layout_height="wrap_content"
                     android:text="Country:"
                     android:textSize="18sp"
@@ -155,51 +155,51 @@
                 <TextView
                     android:id="@+id/tv_movie_country_item"
                     android:layout_width="0dp"
-                    android:layout_weight="0.65"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:textColor="@color/textColorPrimary"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="5dp">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.35"
-                    android:layout_height="wrap_content"
-                    android:text="Director:"
-                    android:textSize="18sp"
-                    android:textColor="@color/textColorPrimary"/>
-                <TextView
-                    android:id="@+id/tv_movie_director_item"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.65"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:textColor="@color/textColorPrimary"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="5dp">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.35"
-                    android:layout_height="wrap_content"
-                    android:text="Actors:"
-                    android:textSize="18sp"
-                    android:textColor="@color/textColorPrimary"/>
-                <TextView
-                    android:id="@+id/tv_movie_actors_item"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.65"
+                    android:layout_weight="0.6"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:textColor="@color/textColorPrimary"/>
             </LinearLayout>
         </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
+            android:layout_height="wrap_content"
+            android:text="Director:"
+            android:textSize="18sp"
+            android:textColor="@color/textColorPrimary"/>
+        <TextView
+            android:id="@+id/tv_movie_director_item"
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/textColorPrimary"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
+            android:layout_height="wrap_content"
+            android:text="Actors:"
+            android:textSize="18sp"
+            android:textColor="@color/textColorPrimary"/>
+        <TextView
+            android:id="@+id/tv_movie_actors_item"
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/textColorPrimary"/>
     </LinearLayout>
 </LinearLayout>

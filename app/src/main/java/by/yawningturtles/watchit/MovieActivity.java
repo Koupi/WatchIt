@@ -28,7 +28,7 @@ import by.yawningturtles.watchit.dal.FilmLoader;
 public class MovieActivity extends AppCompatActivity {
 
     private TextView tvTitle, tvType, tvGenre, tvYear, tvPlot, tvRuntime, tvCountry, tvDirector, tvActors;
-    private ImageView ivPoster;
+    private ImageView ivPoster, ivMark;
 
     private Film film = null;
 
@@ -47,6 +47,7 @@ public class MovieActivity extends AppCompatActivity {
         tvDirector = (TextView) findViewById(R.id.movie_director);
         tvActors = (TextView) findViewById(R.id.movie_actors);
         ivPoster = (ImageView) findViewById(R.id.movie_poster);
+        ivMark = (ImageView) findViewById(R.id.movie_mark);
 
         Intent intent = getIntent();
         LoadMovieTask ps = new LoadMovieTask(this);
@@ -79,7 +80,7 @@ public class MovieActivity extends AppCompatActivity {
                     cal.set(Calendar.MONTH, month);
                     cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                     FilmLoader loader = new FilmLoader(MovieActivity.this);
-                    loader.setFilmToPlanned(film, true, cal);
+                    showFilm(loader.setFilmToPlanned(film, true, cal));
                 }
             }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
             return tpd;
@@ -102,6 +103,12 @@ public class MovieActivity extends AppCompatActivity {
         tvCountry.setText(film.getCountry());
         tvDirector.setText(film.getDirector());
         tvActors.setText(film.getActors());
+
+        if (film.isPlanned()) {
+            ivMark.setImageResource(R.drawable.ic_save_white);
+        } else if (film.isWatched()) {
+            ivMark.setImageResource(R.drawable.ic_watch_white);
+        }
 
         if (film.getPosterURL() != null && !film.getPosterURL().equals("N/A")) {
             Picasso.with(this).load(film.getPosterURL()).into(ivPoster);

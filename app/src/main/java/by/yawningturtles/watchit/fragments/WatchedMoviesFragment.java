@@ -84,7 +84,7 @@ public class WatchedMoviesFragment extends Fragment {
             holder.tvCountry.setText(f.getCountry());
             holder.tvDirector.setText(f.getDirector());
             holder.tvDate.setText(String.format("%02d.%02d.%d", f.getPlanningDate().get(Calendar.DAY_OF_MONTH),
-                    f.getPlanningDate().get(Calendar.MONTH), f.getPlanningDate().get(Calendar.YEAR)));
+                    f.getPlanningDate().get(Calendar.MONTH) + 1, f.getPlanningDate().get(Calendar.YEAR)));
             holder.tvActors.setText(f.getActors());
             if (f.getPosterURL() != null && !f.getPosterURL().equals("N/A")) {
                 Picasso.with(getContext()).load(f.getPosterURL()).into(holder.ivPoster);
@@ -113,7 +113,7 @@ public class WatchedMoviesFragment extends Fragment {
         mRecyclerView = (RecyclerView) getView().findViewById(R.id.watched_result);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new WatchedFilmAdapter(loader.getPlannedFilms());
+        mAdapter = new WatchedFilmAdapter(loader.getWatchedFilms());
         mRecyclerView.setAdapter(mAdapter);
     }
 
