@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.CalendarContract;
+import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -116,7 +117,7 @@ class FilmDbLoader {
     public void setPlannedFilm(Film film, boolean value, Calendar date){
         String selectQuery= "SELECT * FROM " + dbName+" WHERE "+DBHelper.filmIdField +" = ?";
         ContentValues cv = new ContentValues();
-        cv.put(DBHelper.watchedField, value);
+        cv.put(DBHelper.plannedField, value);
         if(date!=null) {
             cv.put(DBHelper.planDateField, date.getTime().toString());
         }
