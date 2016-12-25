@@ -13,14 +13,14 @@ public class Film extends ShortFilm{
     private String genre;
     private String country;
     private String director;
-    private List<String> actors;
+    private String actors;
     private String plot;
     Film(){
 
     }
 
     Film(String filmId, String posterURL, String title, int releaseYear, String runtime, String genre,
-         String type, String country, String director, List<String> actors, String plot){
+         String type, String country, String director, String actors, String plot){
         super(filmId, posterURL, title, releaseYear, type);
         this.runtime = runtime;
         this.genre = genre;
@@ -31,7 +31,7 @@ public class Film extends ShortFilm{
     }
 
     Film(String filmId, String posterURL, String title, int releaseYear, String runtime, String genre,
-         String type, String country, String director, List<String> actors, String plot, boolean watched, boolean planned, Calendar planDate){
+         String type, String country, String director, String actors, String plot, boolean watched, boolean planned, Calendar planDate){
         super(filmId, posterURL, title, releaseYear, type, watched, planned, planDate);
         this.runtime = runtime;
         this.genre = genre;
@@ -48,11 +48,11 @@ public class Film extends ShortFilm{
         this.plot = plot;
     }
 
-    public List<String> getActors() {
+    public String getActors() {
         return actors;
     }
 
-    void setActors(List<String> actors) {
+    void setActors(String actors) {
         this.actors = actors;
     }
 
@@ -76,9 +76,7 @@ public class Film extends ShortFilm{
         return genre;
     }
 
-    void setGenre(String genre) {
-        genre = genre;
-    }
+    void setGenre(String genre) { this.genre = genre; }
 
     public String getRuntime() {
         return runtime;

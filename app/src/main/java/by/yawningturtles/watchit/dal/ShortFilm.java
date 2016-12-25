@@ -38,6 +38,7 @@ public class ShortFilm {
         this.planned = planned;
         this.planDate = planDate;
     }
+
     public String getFilmId() {
         return filmId;
     }
@@ -52,10 +53,6 @@ public class ShortFilm {
 
     void setType(String type) {
         this.type = type;
-    }
-
-    void setGenre(String genre) {
-        genre = genre;
     }
 
     public int getReleaseYear() {

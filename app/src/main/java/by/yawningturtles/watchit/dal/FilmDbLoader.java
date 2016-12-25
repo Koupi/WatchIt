@@ -11,7 +11,7 @@ import java.util.List;
  * Created by marija.savtchouk on 25.12.2016.
  */
 
-public class FilmDbLoader {
+class FilmDbLoader {
     DBHelper dbHelper;
     public final static String dbName = "film";
 
@@ -29,22 +29,16 @@ public class FilmDbLoader {
     public List<Film> getWatchedFilms(){
         List<Film> films = new ArrayList<Film>();
         films.add(new Film("tt0372784", "https://images-na.ssl-images-amazon.com/images/M/MV5BNTM3OTc0MzM2OV5BMl5BanBnXkFtZTYwNzUwMTI3._V1_SX300.jpg", "Batman Begins", 2005, "140 min", "Action, Adventure",
-                "movie", "USA, UK", "Christopher Nolan",  new ArrayList<String>(){{ add("Christian Bale"); add("Michael Caine"); add("Liam Neeson"); }},
+                "movie", "USA, UK", "Christopher Nolan",  "Christian Bale" + "Michael Caine" + "Liam Neeson",
                 "After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from the corruption that Scarecrow and the League of Shadows have cast upon it.", true, false, null));
         films.add(new Film("tt0372784", "https://images-na.ssl-images-amazon.com/images/M/MV5BNTM3OTc0MzM2OV5BMl5BanBnXkFtZTYwNzUwMTI3._V1_SX300.jpg", "Batman Begins", 2005, "140 min", "Action, Adventure",
-                "movie", "USA, UK", "Christopher Nolan",  new ArrayList<String>(){{ add("Christian Bale"); add("Michael Caine"); add("Liam Neeson"); }},
+                "movie", "USA, UK", "Christopher Nolan",  "Christian Bale, "+"Michael Caine,"+"Liam Neeson",
                 "After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from the corruption that Scarecrow and the League of Shadows have cast upon it.", true, false, null));
         return films;
     }
 
     public List<Film> getPlannedFilms(){
         List<Film> films = new ArrayList<Film>();
-        films.add(new Film("tt0372784", "https://images-na.ssl-images-amazon.com/images/M/MV5BNTM3OTc0MzM2OV5BMl5BanBnXkFtZTYwNzUwMTI3._V1_SX300.jpg", "Batman Begins", 2005, "140 min", "Action, Adventure",
-                "movie", "USA, UK", "Christopher Nolan",  new ArrayList<String>(){{ add("Christian Bale"); add("Michael Caine"); add("Liam Neeson"); }},
-                "After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from the corruption that Scarecrow and the League of Shadows have cast upon it.", false, true, new GregorianCalendar(2017, Calendar.DECEMBER, 3)));
-        films.add(new Film("tt0372784", "https://images-na.ssl-images-amazon.com/images/M/MV5BNTM3OTc0MzM2OV5BMl5BanBnXkFtZTYwNzUwMTI3._V1_SX300.jpg", "Batman Begins", 2005, "140 min", "Action, Adventure",
-                "movie", "USA, UK", "Christopher Nolan",  new ArrayList<String>(){{ add("Christian Bale"); add("Michael Caine"); add("Liam Neeson"); }},
-                "After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from the corruption that Scarecrow and the League of Shadows have cast upon it.", false, true, new GregorianCalendar(2017, Calendar.DECEMBER, 3)));
         return films;
     }
 

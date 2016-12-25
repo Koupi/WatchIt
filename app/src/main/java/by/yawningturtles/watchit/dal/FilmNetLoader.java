@@ -4,23 +4,44 @@ import android.graphics.Bitmap;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * Created by marija.savtchouk on 25.12.2016.
  */
 
 class FilmNetLoader {
-    Film loadFilmById(String id){
-        return  new Film("tt0372784", "https://images-na.ssl-images-amazon.com/images/M/MV5BNTM3OTc0MzM2OV5BMl5BanBnXkFtZTYwNzUwMTI3._V1_SX300.jpg", "Batman Begins", 2005, "140 min", "Action, Adventure",
-                "movie", "USA, UK", "Christopher Nolan",  new ArrayList<String>(){{ add("Christian Bale"); add("Michael Caine"); add("Liam Neeson"); }},
-                "After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from the corruption that Scarecrow and the League of Shadows have cast upon it.");
+    Film loadFilmById(String id) {
+        String request = APIConstants.NET_ADDRESS + "?" + APIConstants.ID_PARAM + id + "&" + APIConstants.PLOT_PARAM + "&" + APIConstants.FORMAT_PARAM;
+        LoadFilmNetTask task = new LoadFilmNetTask();
+        task.execute(request);
+        try {
+            return task.get(10, TimeUnit.MINUTES);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     List<ShortFilm> loadFilmBySearch(String title, String type, int year){
-        ArrayList<ShortFilm> films = new ArrayList<>();
-        films.add(new ShortFilm("tt0372784", "https://images-na.ssl-images-amazon.com/images/M/MV5BNTM3OTc0MzM2OV5BMl5BanBnXkFtZTYwNzUwMTI3._V1_SX300.jpg", "Batman Begins", 2005, "movie"));
-        films.add(new ShortFilm("tt0372784", "https://images-na.ssl-images-amazon.com/images/M/MV5BNTM3OTc0MzM2OV5BMl5BanBnXkFtZTYwNzUwMTI3._V1_SX300.jpg", "Batman Begins", 2005, "movie"));
-        return films;
+        String request = APIConstants.NET_ADDRESS + "?" + APIConstants.SEARCH_PARAM+title;
+        if(type!=null){
+            request+="&"+APIConstants.TYPE_PARAM+type;
+        }
+        if(year!=-1){
+            request+="&"+APIConstants.YEAR_PARAM+year;
+        }
+        request+="&"+APIConstants.FORMAT_PARAM;
+        SearchFilmNetTask task = new SearchFilmNetTask();
+        task.execute(request);
+        try{
+            return task.get(10, TimeUnit.MINUTES);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     Bitmap getImage(String url){
