@@ -103,7 +103,9 @@ public class MovieActivity extends AppCompatActivity {
         tvDirector.setText(film.getDirector());
         tvActors.setText(film.getActors());
 
-        Picasso.with(this).load(film.getPosterURL()).into(ivPoster);
+        if (film.getPosterURL() != null && !film.getPosterURL().equals("N/A")) {
+            Picasso.with(this).load(film.getPosterURL()).into(ivPoster);
+        }
     }
 
     private class LoadMovieTask extends AsyncTask<String, Void, Film> {

@@ -98,7 +98,9 @@ public class SearchFragment extends Fragment {
                     startActivity(intent);
                 }
             });
-            Picasso.with(getContext()).load(f.getPosterURL()).into(holder.ivPoster);
+            if (f.getPosterURL() != null && !f.getPosterURL().equals("N/A")) {
+                Picasso.with(getContext()).load(f.getPosterURL()).into(holder.ivPoster);
+            }
         }
 
         @Override
