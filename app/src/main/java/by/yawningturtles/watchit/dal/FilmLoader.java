@@ -65,16 +65,12 @@ public class FilmLoader {
     }
 
     public List<ShortFilm> getShortFilmBySearch(String titlePart, String type, int year) throws ConnectionException {
-        getPlannedFilms();
         if(!hasConnection()) {
             throw new ConnectionException();
         }
         List<ShortFilm> filmList = new ArrayList<ShortFilm>(dbLoader.getFilmBySearch(titlePart, type, year));
         List<ShortFilm> otherFilms = netLoader.loadFilmBySearch(titlePart, type, year);
 
-        for(int i = 0; i<filmList.size(); i++){
-            Log.d("Planned", Boolean.toString(filmList.get(i).isPlanned()));
-        }
         for (ShortFilm film : otherFilms) {
             if(!filmList.contains(film)) {
                 filmList.add(film);
