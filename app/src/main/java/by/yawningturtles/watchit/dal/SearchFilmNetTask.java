@@ -20,14 +20,9 @@ import java.util.Scanner;
  * Created by marija.savtchouk on 25.12.2016.
  */
 
-class SearchFilmNetTask extends AsyncTask<String, String, List<ShortFilm>> {
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-    }
+class SearchFilmNetTask {
 
-    @Override
-    protected List<ShortFilm> doInBackground(String... strings) {
+    public List<ShortFilm> doInBackground(String... strings) {
         List<ShortFilm> list = new ArrayList<ShortFilm>();
         try {
             URL url = new URL(strings[0]);
@@ -38,15 +33,15 @@ class SearchFilmNetTask extends AsyncTask<String, String, List<ShortFilm>> {
             JSONObject doc = new JSONObject(line);
             String response = doc.getString(APIConstants.RESPONSE);
             boolean haveResponse = Boolean.parseBoolean(response);
-            if(!haveResponse){
+            if (!haveResponse) {
                 return list;
             }
             JSONArray movies = doc.getJSONArray(APIConstants.SEARCH);
             for (int j = 0; j < movies.length(); ++j) {
-                JSONObject movie =  movies.getJSONObject(j);
+                JSONObject movie = movies.getJSONObject(j);
                 String titleText = movie.getString(APIConstants.TITLE);
-                String yearText =  movie.getString(APIConstants.YEAR);
-                String id =  movie.getString(APIConstants.ID);
+                String yearText = movie.getString(APIConstants.YEAR);
+                String id = movie.getString(APIConstants.ID);
                 String type = movie.getString(APIConstants.TYPE);
                 String poster = movie.getString(APIConstants.POSTER);
                 ShortFilm outMovie = new ShortFilm();
@@ -64,13 +59,5 @@ class SearchFilmNetTask extends AsyncTask<String, String, List<ShortFilm>> {
         }
 
         return list;
-    }
-    @Override
-    protected void onProgressUpdate(String... values) {
-        super.onProgressUpdate(values);
-    }
-    @Override
-    protected void onPostExecute(List<ShortFilm> result) {
-        super.onPostExecute(result);
     }
 }

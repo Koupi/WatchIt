@@ -16,13 +16,8 @@ class FilmNetLoader {
     Film loadFilmById(String id) {
         String request = APIConstants.NET_ADDRESS + "?" + APIConstants.ID_PARAM + id + "&" + APIConstants.PLOT_PARAM + "&" + APIConstants.FORMAT_PARAM;
         LoadFilmNetTask task = new LoadFilmNetTask();
-        task.execute(request);
-        try {
-            return task.get(10, TimeUnit.MINUTES);
-        } catch (InterruptedException | ExecutionException | TimeoutException e) {
-            e.printStackTrace();
-            return null;
-        }
+
+        return task.doInBackground(request);
     }
 
     List<ShortFilm> loadFilmBySearch(String title, String type, int year){
@@ -35,13 +30,7 @@ class FilmNetLoader {
         }
         request+="&"+APIConstants.FORMAT_PARAM;
         SearchFilmNetTask task = new SearchFilmNetTask();
-        task.execute(request);
-        try{
-            return task.get(10, TimeUnit.MINUTES);
-        } catch (InterruptedException | ExecutionException | TimeoutException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return task.doInBackground(request);
     }
 
     Bitmap getImage(String url){

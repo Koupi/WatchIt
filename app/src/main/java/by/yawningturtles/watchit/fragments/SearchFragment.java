@@ -25,6 +25,7 @@ import java.util.List;
 
 import by.yawningturtles.watchit.MovieActivity;
 import by.yawningturtles.watchit.R;
+import by.yawningturtles.watchit.dal.ConnectionException;
 import by.yawningturtles.watchit.dal.FilmLoader;
 import by.yawningturtles.watchit.dal.ShortFilm;
 
@@ -180,20 +181,23 @@ public class SearchFragment extends Fragment {
 
         @Override
         protected List<ShortFilm> doInBackground(String... params) {
-            FilmLoader loader = new FilmLoader(context);
-            if (params[1].equalsIgnoreCase("any type")) {
-                if (params[2].trim().isEmpty()) {
-                    return loader.getShortFilmBySearch(params[0]);
+            try {
+                FilmLoader loader = new FilmLoader(context);
+                if (params[1].equalsIgnoreCase("any type")) {
+                    if (params[2].trim().isEmpty()) {
+                        return loader.getShortFilmBySearch(params[0]);
+                    } else {
+                        return loader.getShortFilmBySearch(params[0], Integer.parseInt(params[2].trim()));
+                    }
                 } else {
-                    return loader.getShortFilmBySearch(params[0], Integer.parseInt(params[2].trim()));
-                }
-            } else {
-                if (params[2].trim().isEmpty()) {
-                    return loader.getShortFilmBySearch(params[0], params[1]);
-                } else {
-                    return loader.getShortFilmBySearch(params[0], params[1], Integer.parseInt(params[2].trim()));
+                    if (params[2].trim().isEmpty()) {
+                        return loader.getShortFilmBySearch(params[0], params[1]);
+                    } else {
+                        return loader.getShortFilmBySearch(params[0], params[1], Integer.parseInt(params[2].trim()));
+                    }
                 }
             }
+            catch (ConnectionException e){ return null;}
         }
     }
 

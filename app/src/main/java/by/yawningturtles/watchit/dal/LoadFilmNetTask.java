@@ -25,14 +25,7 @@ import org.json.*;
  * Created by marija.savtchouk on 25.12.2016.
  */
 
-class LoadFilmNetTask extends AsyncTask<String, String, Film> {
-
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-    }
-
-    @Override
+class LoadFilmNetTask {
     protected Film doInBackground(String... strings) {
         try {
             URL url = new URL(strings[0]);
@@ -75,15 +68,5 @@ class LoadFilmNetTask extends AsyncTask<String, String, Film> {
             e.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    protected void onProgressUpdate(String... values) {
-        super.onProgressUpdate(values);
-    }
-
-    @Override
-    protected void onPostExecute(Film result) {
-        super.onPostExecute(result);
     }
 }

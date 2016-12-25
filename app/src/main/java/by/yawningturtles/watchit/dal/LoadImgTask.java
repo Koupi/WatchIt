@@ -24,14 +24,8 @@ import javax.xml.parsers.ParserConfigurationException;
  * Created by marija.savtchouk on 25.12.2016.
  */
 
-class LoadImgTask extends AsyncTask<String, String, Bitmap> {
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-    }
-
-    @Override
-    protected Bitmap doInBackground(String... strings) {
+class LoadImgTask {
+    public Bitmap doInBackground(String... strings) {
         try {
             InputStream in = new URL(strings[0]).openStream();
             return BitmapFactory.decodeStream(in);
@@ -39,15 +33,5 @@ class LoadImgTask extends AsyncTask<String, String, Bitmap> {
             e.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    protected void onProgressUpdate(String... values) {
-        super.onProgressUpdate(values);
-    }
-
-    @Override
-    protected void onPostExecute(Bitmap result) {
-        super.onPostExecute(result);
     }
 }
