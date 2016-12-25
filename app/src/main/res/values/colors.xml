@@ -5,4 +5,6 @@
     <color name="colorAccent">#90A4AE</color>
     <color name="textColorPrimary">#AAAAAA</color>
     <color name="windowBackground">#303030</color>
+    <color name="transparent">#00000000</color>
+    <color name="dialogBackground">#424242</color>
 </resources>
