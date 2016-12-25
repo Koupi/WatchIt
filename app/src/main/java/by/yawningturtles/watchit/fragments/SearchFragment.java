@@ -197,7 +197,9 @@ public class SearchFragment extends Fragment {
                     }
                 }
             }
-            catch (ConnectionException e){ return null;}
+            catch (ConnectionException e) {
+                return new ArrayList<>();
+            }
         }
     }
 
