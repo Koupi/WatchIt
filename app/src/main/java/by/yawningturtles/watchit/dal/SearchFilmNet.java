@@ -20,9 +20,9 @@ import java.util.Scanner;
  * Created by marija.savtchouk on 25.12.2016.
  */
 
-class SearchFilmNetTask {
+class SearchFilmNet {
 
-    public List<ShortFilm> doInBackground(String... strings) {
+    public List<ShortFilm> load(String... strings) {
         List<ShortFilm> list = new ArrayList<ShortFilm>();
         try {
             URL url = new URL(strings[0]);

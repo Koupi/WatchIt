@@ -25,8 +25,8 @@ import org.json.*;
  * Created by marija.savtchouk on 25.12.2016.
  */
 
-class LoadFilmNetTask {
-    protected Film doInBackground(String... strings) {
+class LoadFilmNet {
+    protected Film load(String... strings) {
         try {
             URL url = new URL(strings[0]);
             URLConnection conn = url.openConnection();

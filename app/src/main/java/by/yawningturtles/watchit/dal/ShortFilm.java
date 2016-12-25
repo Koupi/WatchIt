@@ -1,5 +1,7 @@
 package by.yawningturtles.watchit.dal;
 
+import android.util.Log;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -101,5 +103,20 @@ public class ShortFilm {
 
     void setPlanningDate(Calendar planned){
         this.planDate = planned;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+
+        ShortFilm shortFilm = (ShortFilm) o;
+        return filmId != null ? filmId.equals(shortFilm.filmId) : shortFilm.filmId == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return filmId != null ? filmId.hashCode() : 0;
     }
 }

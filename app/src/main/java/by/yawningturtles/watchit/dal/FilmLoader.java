@@ -5,9 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import by.yawningturtles.watchit.R;
@@ -50,19 +52,27 @@ public class FilmLoader {
     }
 
     public Film getFilmByID(String id) throws ConnectionException{
-        if(!hasConnection()) {
+        Film film =  dbLoader.getFilmById(id);
+        if(!hasConnection() && film == null) {
             throw new ConnectionException();
         }
-        return netLoader.loadFilmById(id);
+        if(film == null){
+            return netLoader.loadFilmById(id);
+        }
+        return film;
     }
 
     public List<ShortFilm> getShortFilmBySearch(String titlePart, String type, int year) throws ConnectionException {
         if(!hasConnection()) {
             throw new ConnectionException();
         }
-        List<ShortFilm> filmList = new ArrayList<ShortFilm>(netLoader.loadFilmBySearch(titlePart, type, year));
-        //handle dups
-        filmList.addAll(dbLoader.getFilmBySearch(titlePart, type,year));
+        List<ShortFilm> filmList = new ArrayList<ShortFilm>(dbLoader.getFilmBySearch(titlePart, type, year));
+        List<ShortFilm> otherFilms = netLoader.loadFilmBySearch(titlePart, type, year);
+        for (ShortFilm film : otherFilms) {
+            if(!filmList.contains(film)) {
+                filmList.add(film);
+            }
+        }
         return filmList;
     }
 
@@ -70,7 +80,7 @@ public class FilmLoader {
         return getShortFilmBySearch(titlePart, type, -1);
     }
     public List<ShortFilm> getShortFilmBySearch(String titlePart, int year) throws ConnectionException {
-        return getShortFilmBySearch(titlePart, null, -1);
+        return getShortFilmBySearch(titlePart, null, year);
     }
 
     public List<ShortFilm> getShortFilmBySearch(String titlePart) throws ConnectionException {
@@ -85,22 +95,27 @@ public class FilmLoader {
         return dbLoader.getPlannedFilms();
     }
 
-    public Film setFilmToPlanned(Film film, boolean planned){
-        film.setPlanned(planned);
-        dbLoader.setPlannedFilm(film.getFilmId(), planned, null);
+    public Film setFilmToWatched(Film film, boolean watched){
+        dbLoader.setWatchedFilm(film, watched, new GregorianCalendar());
         return film;
     }
-
     public Film setFilmToPlanned(Film film, boolean planned, Calendar date) {
         film.setPlanned(planned);
         film.setPlanningDate(date);
-        dbLoader.setPlannedFilm(film.getFilmId(), planned, date);
+        if(planned){
+            film.setWatched(false);
+        }
+        dbLoader.setPlannedFilm(film, planned, date);
         return film;
     }
 
-    public Film setFilmToWatched(Film film, boolean watched) {
+    public Film setFilmToWatched(Film film, boolean watched, Calendar date) {
         film.setWatched(watched);
-        dbLoader.setWatchedFilm(film.getFilmId(), watched);
+        film.setPlanningDate(date);
+        if(watched) {
+            film.setPlanned(false);
+        }
+        dbLoader.setWatchedFilm(film, watched, date);
         return film;
     }
 

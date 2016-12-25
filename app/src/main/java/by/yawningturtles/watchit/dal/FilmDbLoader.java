@@ -1,11 +1,19 @@
 package by.yawningturtles.watchit.dal;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.provider.CalendarContract;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by marija.savtchouk on 25.12.2016.
@@ -19,34 +27,168 @@ class FilmDbLoader {
         dbHelper = new DBHelper(context, dbName, 1);
     }
 
-    List<ShortFilm> getFilmBySearch(String title, String type, int year){
-        ArrayList<ShortFilm> films = new ArrayList<>();
-        films.add(new ShortFilm("tt0372784", "https://images-na.ssl-images-amazon.com/images/M/MV5BNTM3OTc0MzM2OV5BMl5BanBnXkFtZTYwNzUwMTI3._V1_SX300.jpg", "Batman Begins", 2005, "movie"));
-        films.add(new ShortFilm("tt0372784", "https://images-na.ssl-images-amazon.com/images/M/MV5BNTM3OTc0MzM2OV5BMl5BanBnXkFtZTYwNzUwMTI3._V1_SX300.jpg", "Batman Begins", 2005, "movie"));
+    List<? extends ShortFilm> getFilmBySearch(String title, String type, int year){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ArrayList<Film> films = new ArrayList<>();
+
+        String whereQuery = DBHelper.titleField + " LIKE ?";
+        List<String> values = new ArrayList<>();
+        values.add("%"+title+"%");
+        if(type != null){
+            whereQuery += " AND "+DBHelper.typeField +" = ?";
+            values.add(type);
+        }
+        if(year !=-1){
+            whereQuery += " AND "+DBHelper.releaseYearField + " = ?";
+            values.add(Integer.toString(year));
+        }
+        String[] paramArr = new String[values.size()];
+        paramArr = values.toArray(paramArr);
+        Cursor c = db.query(dbName, null, whereQuery, paramArr, null, null, null);
+        getFilmsFromCursor(c, films);
+        c.close();
+        dbHelper.close();
         return films;
     }
 
     public List<Film> getWatchedFilms(){
-        List<Film> films = new ArrayList<Film>();
-        films.add(new Film("tt0372784", "https://images-na.ssl-images-amazon.com/images/M/MV5BNTM3OTc0MzM2OV5BMl5BanBnXkFtZTYwNzUwMTI3._V1_SX300.jpg", "Batman Begins", 2005, "140 min", "Action, Adventure",
-                "movie", "USA, UK", "Christopher Nolan",  "Christian Bale" + "Michael Caine" + "Liam Neeson",
-                "After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from the corruption that Scarecrow and the League of Shadows have cast upon it.", true, false, null));
-        films.add(new Film("tt0372784", "https://images-na.ssl-images-amazon.com/images/M/MV5BNTM3OTc0MzM2OV5BMl5BanBnXkFtZTYwNzUwMTI3._V1_SX300.jpg", "Batman Begins", 2005, "140 min", "Action, Adventure",
-                "movie", "USA, UK", "Christopher Nolan",  "Christian Bale, "+"Michael Caine,"+"Liam Neeson",
-                "After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from the corruption that Scarecrow and the League of Shadows have cast upon it.", true, false, null));
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ArrayList<Film> films = new ArrayList<>();
+        Cursor c = db.query(dbName, null, DBHelper.watchedField + "= ?", new String[]{Integer.toString(1)}, null, null, null);
+        getFilmsFromCursor(c, films);
+        c.close();
+        dbHelper.close();
         return films;
     }
-
+    private void getFilmsFromCursor(Cursor c, ArrayList<Film> outFilm){
+        if (c.moveToFirst()) {
+            int idColIndex = c.getColumnIndex(DBHelper.filmIdField);
+            int titleColIndex = c.getColumnIndex(DBHelper.titleField);
+            int plotColIndex = c.getColumnIndex(DBHelper.plotField);
+            int posterColIndex = c.getColumnIndex(DBHelper.posterURLField);
+            int yearColIndex = c.getColumnIndex(DBHelper.releaseYearField);
+            int watchedColIndex = c.getColumnIndex(DBHelper.watchedField);
+            int plannedColIndex = c.getColumnIndex(DBHelper.plannedField);
+            int planDateColIndex = c.getColumnIndex(DBHelper.planDateField);
+            int runtimeColIndex = c.getColumnIndex(DBHelper.runtimeField);
+            int genreColIndex = c.getColumnIndex(DBHelper.genreField);
+            int countryColIndex = c.getColumnIndex(DBHelper.countryField);
+            int directorColIndex = c.getColumnIndex(DBHelper.directorField);
+            int actorsColIndex = c.getColumnIndex(DBHelper.actorsField);
+            int typeColIndex = c.getColumnIndex(DBHelper.typeField);
+            do {
+                Film film = new Film();
+                film.setFilmId(c.getString(idColIndex));
+                film.setPosterURL(c.getString(posterColIndex));
+                film.setTitle(c.getString(titleColIndex));
+                film.setPlot(c.getString(plotColIndex));
+                film.setReleaseYear(c.getInt(yearColIndex));
+                film.setWatched(c.getInt(watchedColIndex) == 1);
+                film.setPlanned(c.getInt(plannedColIndex) == 1);
+                SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+                Calendar calendar = Calendar.getInstance();;
+                try {
+                    calendar.setTime(sdf.parse(c.getString(planDateColIndex)));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                film.setPlanningDate(calendar);
+                film.setRuntime(c.getString(runtimeColIndex));
+                film.setGenre(c.getString(genreColIndex));
+                film.setCountry(c.getString(countryColIndex));
+                film.setDirector(c.getString(directorColIndex));
+                film.setActors(c.getString(actorsColIndex));
+                film.setType(c.getString(typeColIndex));
+                outFilm.add(film);
+            } while (c.moveToNext());
+        }
+    }
     public List<Film> getPlannedFilms(){
-        List<Film> films = new ArrayList<Film>();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ArrayList<Film> films = new ArrayList<>();
+        Cursor c = db.query(dbName, null, DBHelper.plannedField + "= ?", new String[]{Integer.toString(1)}, null, null, null);
+        getFilmsFromCursor(c, films);
+        c.close();
+        dbHelper.close();
         return films;
     }
 
-    public void setPlannedFilm(String filmId, boolean value, Calendar date){
-
+    public void setPlannedFilm(Film film, boolean value, Calendar date){
+        String selectQuery= "SELECT * FROM " + dbName+" WHERE "+DBHelper.filmIdField +" = ?";
+        ContentValues cv = new ContentValues();
+        cv.put(DBHelper.watchedField, value);
+        if(date!=null) {
+            cv.put(DBHelper.planDateField, date.getTime().toString());
+        }
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{film.getFilmId()});
+        String id;
+        if(cursor.moveToFirst()) {
+            id = cursor.getString(cursor.getColumnIndex(DBHelper.filmIdField));
+            db.update(dbName, cv, DBHelper.filmIdField+"= ?", new String[]{id});
+        }
+        else {
+            cv.put(DBHelper.filmIdField, film.getFilmId());
+            cv.put(DBHelper.titleField, film.getTitle());
+            cv.put(DBHelper.plotField, film.getPlot());
+            cv.put(DBHelper.posterURLField, film.getPosterURL());
+            cv.put(DBHelper.releaseYearField, film.getReleaseYear());
+            cv.put(DBHelper.typeField, film.getType());
+            cv.put(DBHelper.watchedField, film.isWatched());
+            cv.put(DBHelper.runtimeField, film.getRuntime());
+            cv.put(DBHelper.genreField, film.getGenre());
+            cv.put(DBHelper.countryField, film.getCountry());
+            cv.put(DBHelper.directorField, film.getDirector());
+            cv.put(DBHelper.actorsField, film.getActors());
+            db.insert(dbName, null, cv);
+        }
+        cursor.close();
+        dbHelper.close();
     }
 
-    public void setWatchedFilm(String filmId, boolean value){
+    public Film getFilmById(String filmId) {
+        String selectQuery= "SELECT * FROM " + dbName+" WHERE "+DBHelper.filmIdField +" = ?";
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{filmId});
+        ArrayList<Film> films = new ArrayList<>();
+        getFilmsFromCursor(cursor, films);
+        cursor.close();
+        if(films.isEmpty()){
+            return null;
+        }
+        else return films.get(0);
+    }
 
+    public void setWatchedFilm(Film film, boolean value, Calendar date){
+        String selectQuery= "SELECT * FROM " + dbName+" WHERE "+DBHelper.filmIdField +" = ?";
+        ContentValues cv = new ContentValues();
+        cv.put(DBHelper.watchedField, value);
+        if(date!=null) {
+            cv.put(DBHelper.planDateField, date.getTime().toString());
+        }
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{film.getFilmId()});
+        String id;
+        if(cursor.moveToFirst()) {
+            id = cursor.getString(cursor.getColumnIndex(DBHelper.filmIdField));
+            db.update(dbName, cv, DBHelper.filmIdField+"= ?", new String[]{id});
+        }
+        else {
+            cv.put(DBHelper.filmIdField, film.getFilmId());
+            cv.put(DBHelper.titleField, film.getTitle());
+            cv.put(DBHelper.plotField, film.getPlot());
+            cv.put(DBHelper.posterURLField, film.getPosterURL());
+            cv.put(DBHelper.releaseYearField, film.getReleaseYear());
+            cv.put(DBHelper.typeField, film.getType());
+            cv.put(DBHelper.plannedField, film.isPlanned());
+            cv.put(DBHelper.runtimeField, film.getRuntime());
+            cv.put(DBHelper.genreField, film.getGenre());
+            cv.put(DBHelper.countryField, film.getCountry());
+            cv.put(DBHelper.directorField, film.getDirector());
+            cv.put(DBHelper.actorsField, film.getActors());
+            db.insert(dbName, null, cv);
+        }
+        cursor.close();
+        dbHelper.close();
     }
 }

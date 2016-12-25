@@ -24,8 +24,8 @@ import javax.xml.parsers.ParserConfigurationException;
  * Created by marija.savtchouk on 25.12.2016.
  */
 
-class LoadImgTask {
-    public Bitmap doInBackground(String... strings) {
+class LoadImgNet {
+    public Bitmap load(String... strings) {
         try {
             InputStream in = new URL(strings[0]).openStream();
             return BitmapFactory.decodeStream(in);
