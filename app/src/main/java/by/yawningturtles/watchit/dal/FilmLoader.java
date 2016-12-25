@@ -9,6 +9,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -87,18 +89,36 @@ public class FilmLoader {
         return getShortFilmBySearch(titlePart, null, -1);
     }
 
+    private void sortByCalendar(List<Film> films){
+        Collections.sort(films, new Comparator<Film>() {
+            public int compare(Film m1, Film m2) {
+                Calendar c1 = m1.getPlanningDate();
+                Calendar c2 = m2.getPlanningDate();
+                if(c1==null||c2==null){
+                    return c1==null&&c2==null?0:((c1==null)?1:-1);
+                }
+                return c2.compareTo(c1);
+            }
+        });
+    }
+
     public List<Film> getWatchedFilms(){
-        return dbLoader.getWatchedFilms();
+        List<Film> films =  dbLoader.getWatchedFilms();
+        sortByCalendar(films);
+        return films;
     }
 
     public List<Film> getPlannedFilms(){
-        return dbLoader.getPlannedFilms();
+        List<Film> films = dbLoader.getPlannedFilms();
+        sortByCalendar(films);
+        return films;
     }
 
     public Film setFilmToWatched(Film film, boolean watched){
-        dbLoader.setWatchedFilm(film, watched, new GregorianCalendar());
+        setFilmToWatched(film, watched, new GregorianCalendar());
         return film;
     }
+
     public Film setFilmToPlanned(Film film, boolean planned, Calendar date) {
         film.setPlanned(planned);
         film.setPlanningDate(date);
