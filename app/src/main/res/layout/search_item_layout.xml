@@ -10,9 +10,20 @@
     >
     <LinearLayout
         android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/default_poster"
+            android:id="@+id/iv_movie_poster_item"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.8"
-        android:orientation="vertical">
+        android:layout_weight="0.6"
+        android:orientation="vertical"
+        android:layout_marginLeft="5dp">
         <TextView
             android:id="@+id/tv_movie_title_item"
             android:layout_width="wrap_content"

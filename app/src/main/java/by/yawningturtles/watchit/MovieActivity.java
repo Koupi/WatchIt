@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.Calendar;
 
 import by.yawningturtles.watchit.dal.ConnectionException;
@@ -101,16 +103,7 @@ public class MovieActivity extends AppCompatActivity {
         tvDirector.setText(film.getDirector());
         tvActors.setText(film.getActors());
 
-        LoadPosterTask lpt = new LoadPosterTask(this);
-        lpt.execute(film.getPosterURL());
-    }
-
-    public void showPoster(Bitmap bitmap) {
-        if (bitmap == null) {
-            return;
-        }
-        ivPoster.setImageBitmap(bitmap);
-        ivPoster.refreshDrawableState();
+        Picasso.with(this).load(film.getPosterURL()).into(ivPoster);
     }
 
     private class LoadMovieTask extends AsyncTask<String, Void, Film> {
@@ -145,35 +138,6 @@ public class MovieActivity extends AppCompatActivity {
             catch (ConnectionException e) {
                 return null;
             }
-        }
-    }
-
-    private class LoadPosterTask extends AsyncTask<String, Void, Bitmap> {
-        private final Context context;
-
-        LoadPosterTask(Context c) {
-            this.context = c;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            super.onPostExecute(bitmap);
-            if (bitmap == null) {
-                return;
-            }
-            final Bitmap b = bitmap;
-            //new Thread(new Runnable() {
-            //    @Override
-             //   public void run() {
-                    ivPoster.setImageBitmap(b);
-             //   }
-            //}).start();
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... params) {
-            FilmLoader loader = new FilmLoader(context);
-            return loader.getImageByUrl(params[0]);
         }
     }
 }

@@ -16,9 +16,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +57,7 @@ public class SearchFragment extends Fragment {
         public class ViewHolder extends RecyclerView.ViewHolder {
 
             public TextView tvType, tvTitle, tvYear;
+            public ImageView ivPoster;
             public ImageButton btLookMore;
 
             public ViewHolder(View v) {
@@ -61,6 +65,7 @@ public class SearchFragment extends Fragment {
                 tvType = (TextView) v.findViewById(R.id.tv_movie_type_item);
                 tvTitle = (TextView) v.findViewById(R.id.tv_movie_title_item);
                 tvYear = (TextView) v.findViewById(R.id.tv_movie_year_item);
+                ivPoster = (ImageView) v.findViewById(R.id.iv_movie_poster_item);
                 btLookMore = (ImageButton) v.findViewById(R.id.bt_look_more);
             }
         }
@@ -93,6 +98,7 @@ public class SearchFragment extends Fragment {
                     startActivity(intent);
                 }
             });
+            Picasso.with(getContext()).load(f.getPosterURL()).into(holder.ivPoster);
         }
 
         @Override
