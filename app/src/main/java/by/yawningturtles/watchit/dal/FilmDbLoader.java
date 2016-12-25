@@ -84,6 +84,7 @@ class FilmDbLoader {
                 film.setTitle(c.getString(titleColIndex));
                 film.setPlot(c.getString(plotColIndex));
                 film.setReleaseYear(c.getInt(yearColIndex));
+                Log.d("WP", c.getString(watchedColIndex)+" "+c.getString(plannedColIndex));
                 film.setWatched(c.getInt(watchedColIndex) == 1);
                 film.setPlanned(c.getInt(plannedColIndex) == 1);
                 SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
@@ -100,6 +101,7 @@ class FilmDbLoader {
                 film.setDirector(c.getString(directorColIndex));
                 film.setActors(c.getString(actorsColIndex));
                 film.setType(c.getString(typeColIndex));
+                Log.d("WP", ""+film.isPlanned() +film.isWatched());
                 outFilm.add(film);
             } while (c.moveToNext());
         }
@@ -118,6 +120,8 @@ class FilmDbLoader {
         String selectQuery= "SELECT * FROM " + dbName+" WHERE "+DBHelper.filmIdField +" = ?";
         ContentValues cv = new ContentValues();
         cv.put(DBHelper.plannedField, value);
+        cv.put(DBHelper.watchedField, film.isWatched());
+        Log.d("WHATCHED",  Boolean.toString(film.isWatched()));
         if(date!=null) {
             cv.put(DBHelper.planDateField, date.getTime().toString());
         }
@@ -135,7 +139,6 @@ class FilmDbLoader {
             cv.put(DBHelper.posterURLField, film.getPosterURL());
             cv.put(DBHelper.releaseYearField, film.getReleaseYear());
             cv.put(DBHelper.typeField, film.getType());
-            cv.put(DBHelper.watchedField, film.isWatched());
             cv.put(DBHelper.runtimeField, film.getRuntime());
             cv.put(DBHelper.genreField, film.getGenre());
             cv.put(DBHelper.countryField, film.getCountry());
@@ -164,6 +167,8 @@ class FilmDbLoader {
         String selectQuery= "SELECT * FROM " + dbName+" WHERE "+DBHelper.filmIdField +" = ?";
         ContentValues cv = new ContentValues();
         cv.put(DBHelper.watchedField, value);
+        Log.d("PLANNED",  Boolean.toString(film.isPlanned()));
+        cv.put(DBHelper.plannedField, film.isPlanned());
         if(date!=null) {
             cv.put(DBHelper.planDateField, date.getTime().toString());
         }
@@ -181,7 +186,6 @@ class FilmDbLoader {
             cv.put(DBHelper.posterURLField, film.getPosterURL());
             cv.put(DBHelper.releaseYearField, film.getReleaseYear());
             cv.put(DBHelper.typeField, film.getType());
-            cv.put(DBHelper.plannedField, film.isPlanned());
             cv.put(DBHelper.runtimeField, film.getRuntime());
             cv.put(DBHelper.genreField, film.getGenre());
             cv.put(DBHelper.countryField, film.getCountry());

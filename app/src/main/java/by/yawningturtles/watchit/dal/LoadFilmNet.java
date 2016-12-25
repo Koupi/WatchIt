@@ -32,7 +32,6 @@ class LoadFilmNet {
             URLConnection conn = url.openConnection();
             Scanner stream = new Scanner(conn.getInputStream());
             String line = stream.nextLine();
-            Log.d("FROM SERVICE", line);
             JSONObject doc = new JSONObject(line);
 
             String response = doc.getString(APIConstants.RESPONSE);
