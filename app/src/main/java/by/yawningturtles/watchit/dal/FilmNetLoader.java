@@ -17,6 +17,7 @@ class FilmNetLoader {
     }
 
     List<ShortFilm> loadFilmBySearch(String title, String type, int year){
+        title = title.replaceAll(" ", "%20");
         String request = APIConstants.NET_ADDRESS + "?" + APIConstants.SEARCH_PARAM+title;
         if(type!=null){
             request+="&"+APIConstants.TYPE_PARAM+type;
