@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MovieActivity"></activity>
+        <receiver android:name="by.yawningturtles.watchit.services.NotificationService" />
     </application>
 
 </manifest>

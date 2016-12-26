@@ -4,11 +4,185 @@
     android:layout_height="match_parent"
     android:background="@color/windowBackground"
     tools:context="by.yawningturtles.watchit.fragments.SettingsFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Settings fragment" />
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/everyDayTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:textSize="18sp"
+                android:text="Everyday notifications"
+                android:textColor="@color/textColorPrimary" />
+
+            <CheckBox
+                android:id="@+id/everyDayCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/textColorPrimary" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:padding="5dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/everyDayTimeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:textSize="18sp"
+                android:text="Notificate at "
+                android:textColor="@color/textColorPrimary" />
+
+            <EditText
+                android:id="@+id/hEditText"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@android:color/darker_gray"
+                android:ems="10"
+                android:inputType="number"
+                android:text="0"
+                android:textColor="@color/colorPrimaryDark" />
+
+            <TextView
+                android:id="@+id/hTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:textSize="18sp"
+                android:text="hours"
+                android:textColor="@color/textColorPrimary" />
+
+            <EditText
+                android:id="@+id/minEditText"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@android:color/darker_gray"
+                android:ems="10"
+                android:inputType="time"
+                android:text="0"
+                android:textColor="@color/colorPrimaryDark" />
+
+            <TextView
+                android:id="@+id/minTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:textSize="18sp"
+                android:text="minutes"
+                android:textColor="@color/textColorPrimary" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/plannedTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="18sp"
+                android:paddingLeft="10dp"
+                android:text="Notificate before planned films"
+                android:textColor="@color/textColorPrimary" />
+
+            <CheckBox
+                android:id="@+id/plannedCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/textColorPrimary" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/beforeTimeCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:text="Notificate at"
+                android:textColor="@color/textColorPrimary" />
+
+            <EditText
+                android:id="@+id/hPlannedEditText"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@android:color/darker_gray"
+                android:ems="10"
+                android:inputType="number"
+                android:text="0"
+                android:textColor="@color/colorPrimaryDark" />
+
+            <TextView
+                android:id="@+id/hPlannedTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:textSize="18sp"
+                android:layout_marginLeft="5dp"
+                android:text="hours"
+                android:textColor="@color/textColorPrimary" />
+
+            <EditText
+                android:id="@+id/minPlannedEditText"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@android:color/darker_gray"
+                android:ems="10"
+                android:inputType="time"
+                android:text="0"
+                android:textColor="@color/colorPrimaryDark" />
+
+            <TextView
+                android:id="@+id/minPlannedTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:textSize="18sp"
+                android:layout_marginLeft="5dp"
+                android:text="minutes"
+                android:textColor="@color/textColorPrimary" />
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorAccent"
+                android:layout_centerHorizontal="true"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:text="SAVE" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
 
 </RelativeLayout>
