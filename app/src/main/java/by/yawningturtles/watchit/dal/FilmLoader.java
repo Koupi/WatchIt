@@ -90,7 +90,7 @@ public class FilmLoader {
         return getShortFilmBySearch(titlePart, null, -1);
     }
 
-    private void sortByCalendar(List<Film> films){
+    private void sortByCalendarDesc(List<Film> films){
         Collections.sort(films, new Comparator<Film>() {
             public int compare(Film m1, Film m2) {
                 Calendar c1 = m1.getPlanningDate();
@@ -103,15 +103,27 @@ public class FilmLoader {
         });
     }
 
+    private void sortByCalendarAsc(List<Film> films){
+        Collections.sort(films, new Comparator<Film>() {
+            public int compare(Film m1, Film m2) {
+                Calendar c1 = m1.getPlanningDate();
+                Calendar c2 = m2.getPlanningDate();
+                if(c1==null||c2==null){
+                    return c1==null&&c2==null?0:((c2==null)?1:-1);
+                }
+                return c1.compareTo(c2);
+            }
+        });
+    }
     public List<Film> getWatchedFilms(){
         List<Film> films =  dbLoader.getWatchedFilms();
-        sortByCalendar(films);
+        sortByCalendarDesc(films);
         return films;
     }
 
     public List<Film> getPlannedFilms(){
         List<Film> films = dbLoader.getPlannedFilms();
-        sortByCalendar(films);
+        sortByCalendarAsc(films);
         return films;
     }
 
