@@ -95,14 +95,23 @@ public class SavedMoviesFragment extends Fragment {
             holder.tvDate.setText(String.format("%02d.%02d.%d", f.getPlanningDate().get(Calendar.DAY_OF_MONTH),
                     f.getPlanningDate().get(Calendar.MONTH) + 1, f.getPlanningDate().get(Calendar.YEAR)));
             holder.tvActors.setText(f.getActors());
-            final int pos = position;
             holder.btWatch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     FilmLoader loader = new FilmLoader(getContext());
                     loader.setFilmToWatched(f, true);
-                    mDataset.remove(pos);
-                    mAdapter.notifyItemRemoved(pos);
+                    int pos = -1;
+                    for (int i = 0; i < mDataset.size(); i++) {
+                        Film film = mDataset.get(i);
+                        if (f.getFilmId().equals(film.getFilmId())) {
+                            pos = i;
+                            break;
+                        }
+                    }
+                    if (pos >= 0) {
+                        mDataset.remove(pos);
+                        mAdapter.notifyItemRemoved(pos);
+                    }
                 }
             });
             if (f.getPosterURL() != null && !f.getPosterURL().equals("N/A")) {
